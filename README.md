@@ -12,6 +12,9 @@ app.post("/webhook", (req, res) => {
         console.log("PR Number:", pull_request.number);
         console.log("PR Title:", pull_request.title);
     }
+     const repo = req.body.respository.full_name;
+    const repo = req.body.respository.full_name;
+    const repo = req.body.respository.full_name;
 
     res.status(200).send("Webhook received");
 });
