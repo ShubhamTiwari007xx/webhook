@@ -17,3 +17,5 @@ if (!verifyGitHubSignature(req)) {
         console.log("PR Number:", pull_request.number);
         console.log("PR Title:", pull_request.title);
     }
+
+get bull:review-queue:meta
