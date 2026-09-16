@@ -19,3 +19,14 @@ if (!verifyGitHubSignature(req)) {
     }
 
 get bull:review-queue:meta
+
+
+
+console.log("⏳ Updating review to done...");
+
+await prisma.review.update({
+    where: { id: reviewId },
+    data: { status: "done" },
+});
+
+console.log("✅ Review status updated to done");
