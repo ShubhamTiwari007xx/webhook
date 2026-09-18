@@ -29,4 +29,7 @@ await prisma.review.update({
     data: { status: "done" },
 });
 
+
+
+npx tsx worker.ts
 console.log("✅ Review status updated to done");
