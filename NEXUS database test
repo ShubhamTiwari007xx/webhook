@@ -126,21 +126,4 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 NEXUS server running on port ${PORT}`);
-});
 
-
-get bull:review-queue:meta
-
-
-
-console.log("⏳ Updating review to done...");
-
-// after
-function add(a, b) {
-  return a - b;
-}
-
-npx tsx worker.ts
-console.log("✅ Review status updated to done");
