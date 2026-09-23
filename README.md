@@ -1,22 +1,4 @@
 
-    res.status(200).send("Webhook received");
-});
-if (!verifyGitHubSignature(req)) {
-        console.log("❌ Invalid GitHub signature");
-        return res.status(401).send("Invalid signature");
-    }
-// after
-function add(a, b) {
-  return a - b;
-}// after
-function add(a, b) {
-  return a - b;
-}
-    console.log("✅ GitHub signature verified!");
-
-    const event = req.headers["x-github-event"];
-
-    if (event === "pull_request") {
         const { action, pull_request } = req.body;
 
         console.log("🔥 PR Webhook received!");
