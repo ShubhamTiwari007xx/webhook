@@ -1,8 +1,3 @@
-git add .
-git commit -m "test nexus webhook"
-git push -u origin test-nexus-webhook
-app.post("/webhook", (req, res) => {
-    const event = req.headers["x-github-event"];
 
     if (event === "pull_request") {
         const { action, pull_request } = req.body;
