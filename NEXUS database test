@@ -118,3 +118,70 @@ function add(a, b) {
 
 npx tsx worker.ts
 console.log("✅ Review status updated to done");
+
+import IORedis from "ioredis";
+import { Worker } from "bullmq";
+import { prisma } from "./src/db";
+import { fetchPullRequestDiff } from "./src/github/github";
+import { reviewWithOllama } from "./src/ai/ollama";
+const connection = new IORedis("redis://127.0.0.1:6379", {
+  maxRetriesPerRequest: null,
+});
+
+const worker = new Worker(
+  "review-queue",
+  async (job) => {
+    const { reviewId, repo, prNumber, diffUrl } = job.data;
+
+    console.log("🔥 Processing review job!");
+    console.log("Review ID:", reviewId);
+    console.log("Repo:", repo);
+    console.log("PR Number:", prNumber);
+    console.log("Diff URL:", diffUrl);
+
+    console.log("⏳ Updating review to processing...");
+
+    await prisma.review.update({
+      where: { id: reviewId },
+      data: { status: "processing" },
+    });
+
+    console.log("✅ Review status updated to processing");
+    // ...
+    const diff = await fetchPullRequestDiff(diffUrl);
+
+    console.log("📄 Diff fetched!");
+    console.log("📏 Diff length:", diff.length);
+
+    console.log("🤖 Sending diff to Ollama...");
+
+    const review = await reviewWithOllama(diff);
+
+    console.log("✅ AI review completed!");
+    console.log(JSON.stringify(review, null, 2));
+
+    console.log("⏳ Updating review to done...");
+
+    await prisma.review.update({
+      where: { id: reviewId },
+      data: {  
+        summary: review.summary,
+        issues: review.issues },
+    });
+    console.log("✅ ai  Review saved  to postgres  SQL  ");
+
+    await prisma.review.update({
+  where: { id: reviewId },
+  data: { status: "done" },
+});
+
+console.log("⏳ Updating review to done...");
+  }, 
+  
+  { connection },
+);
+worker.on("failed", (job, err) => {
+  console.log(`❌ Job ${job?.id} failed!`);
+  console.log("Attempt:", job?.attemptsMade);
+  console.log("Error:", err.message);
+});
