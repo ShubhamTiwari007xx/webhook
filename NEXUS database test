@@ -106,13 +106,7 @@ app.post("/webhook", async (req, res) => {
         prNumber,
         diffUrl,
     },
-    {
-        attempts: 3,
-        backoff: {
-            type: "exponential",
-            delay: 2000,
-        },
-    }
+  \
 );
 
     console.log("📨 Review job added!");
