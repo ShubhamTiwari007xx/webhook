@@ -1,6 +1,4 @@
-NEXUS database testtttt
 
-// Express typings are unavailable in this project; keep the existing runtime import.
 import "dotenv/config";
 // Express typings are unavailable in this project.
 // @ts-expect-error Express has no installed declaration file.
@@ -128,6 +126,16 @@ const worker = new Worker(
       where: { id: reviewId },
       data: { status: "processing" },
     });
+   await reviewQueue.add(
+    "review-pr",
+    {
+        reviewId: review.id,
+        repo,
+        prNumber,
+        diffUrl,
+    },
+  \
+);
 
     console.log("✅ Review status updated to processing");
     // ...
@@ -168,4 +176,18 @@ worker.on("failed", (job, err) => {
   console.log("Attempt:", job?.attemptsMade);
   console.log("Error:", err.message);
 });
+
+
+import "dotenv/config";
+import { PrismaClient } from "./generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+});
+
+export const prisma = new PrismaClient({
+  adapter, 
+});
+
 
