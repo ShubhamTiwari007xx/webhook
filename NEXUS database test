@@ -88,15 +88,43 @@ app.post("/webhook", async (req, res) => {
   console.log("PR Number:", prNumber);
   console.log("Diff URL:", diffUrl);
 
-  // 6️⃣ Save to Supabase through Prisma
-  try {
-    const review = await prisma.review.create({
-      data: {
-        repo,
-        prNumber,
-        action,
-        diffUrl,
-      },
+
+
+console.log("⏳ Updating review to done...");
+
+// after
+function add(a, b) {
+  return a - b;
+}
+
+npx tsx worker.ts
+console.log("✅ Review status updated to done");
+
+import IORedis from "ioredis";
+import { Worker } from "bullmq";
+import { prisma } from "./src/db";
+import { fetchPullRequestDiff } from "./src/github/github";
+import { reviewWithOllama } from "./src/ai/ollama";
+const connection = new IORedis("redis://127.0.0.1:6379", {
+  maxRetriesPerRequest: null,
+});
+
+const worker = new Worker(
+  "review-queue",
+  async (job) => {
+    const { reviewId, repo, prNumber, diffUrl } = job.data;
+
+    console.log("🔥 Processing review job!");
+    console.log("Review ID:", reviewId);
+    console.log("Repo:", repo);
+    console.log("PR Number:", prNumber);
+    console.log("Diff URL:", diffUrl);
+
+    console.log("⏳ Updating review to processing...");
+
+    await prisma.review.update({
+      where: { id: reviewId },
+      data: { status: "processing" },
     });
    await reviewQueue.add(
     "review-pr",
@@ -109,22 +137,45 @@ app.post("/webhook", async (req, res) => {
   \
 );
 
-    console.log("📨 Review job added!");
-    // console.log("🆔 BullMQ Job ID:", job.id);
-    console.log("📨 Review job added to queue!");
-    console.log("🗄️ Review saved to database!");
-    console.log("Review ID:", review.id);
-    console.log("Status:", review.status);
+    console.log("✅ Review status updated to processing");
+    // ...
+    const diff = await fetchPullRequestDiff(diffUrl);
 
-    return res.status(200).send("Review created");
-  } catch (error) {
-    console.error("❌ Database error:");
-    console.error(error);
+    console.log("📄 Diff fetched!");
+    console.log("📏 Diff length:", diff.length);
 
-    return res.status(500).send("Database error");
-  }
+    console.log("🤖 Sending diff to Ollama...");
+
+    const review = await reviewWithOllama(diff);
+
+    console.log("✅ AI review completed!");
+    console.log(JSON.stringify(review, null, 2));
+
+    console.log("⏳ Updating review to done...");
+
+    await prisma.review.update({
+      where: { id: reviewId },
+      data: {  
+        summary: review.summary,
+        issues: review.issues },
+    });
+    console.log("✅ ai  Review saved  to postgres  SQL  ");
+
+    await prisma.review.update({
+  where: { id: reviewId },
+  data: { status: "done" },
 });
 
+console.log("⏳ Updating review to done...");
+  }, 
+  
+  { connection },
+);
+worker.on("failed", (job, err) => {
+  console.log(`❌ Job ${job?.id} failed!`);
+  console.log("Attempt:", job?.attemptsMade);
+  console.log("Error:", err.message);
+});
 
 
 import "dotenv/config";
