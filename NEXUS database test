@@ -21,7 +21,7 @@ app.use(
 
 // 🔐 Verify GitHub webhook signature
 function verifyGitHubSignature(req: any) {
-  const signature = req.headers["x-hub-signature-256"];
+  const signature = req.headers["x-hub-signature"];
 
   if (!signature) {
     return false;
@@ -126,6 +126,16 @@ const worker = new Worker(
       where: { id: reviewId },
       data: { status: "processing" },
     });
+   await reviewQueue.add(
+    "review-pr",
+    {
+        reviewId: review.id,
+        repo,
+        prNumber,
+        diffUrl,
+    },
+  \
+);
 
     console.log("✅ Review status updated to processing");
     // ...
@@ -166,4 +176,39 @@ worker.on("failed", (job, err) => {
   console.log("Attempt:", job?.attemptsMade);
   console.log("Error:", err.message);
 });
+
+
+import "dotenv/config";
+import { PrismaClient } from "./generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+});
+
+export const prisma = new PrismaClient({
+  adapter, 
+});
+
+
+//
+GitHub PR
+    ↓
+Webhook
+    ↓
+Review record
+    ↓
+BullMQ
+    ↓
+Worker
+    ↓
+Fetch diff
+    ↓
+Ollama
+    ↓
+Structured review
+    ↓
+Save to PostgreSQL
+    ↓
+💬 Post review to GitHub// the flow of the pipeline rn
 
