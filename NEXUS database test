@@ -191,3 +191,24 @@ export const prisma = new PrismaClient({
 });
 
 
+//
+GitHub PR
+    ↓
+Webhook
+    ↓
+Review record
+    ↓
+BullMQ
+    ↓
+Worker
+    ↓
+Fetch diff
+    ↓
+Ollama
+    ↓
+Structured review
+    ↓
+Save to PostgreSQL
+    ↓
+💬 Post review to GitHub// the flow of the pipeline rn
+
