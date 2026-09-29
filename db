@@ -32,3 +32,47 @@ if (existingReview?.githubCommentId) {
 
   console.log("💬 AI review posted to GitHub!");
 }
+
+
+const issueCount = review.issues.length;
+
+const severityEmoji: Record<string, string> = {
+  high: "🔴",
+  medium: "🟡",
+  low: "🔵",
+};
+
+const issuesSection =
+  issueCount === 0
+    ? "### ✅ No significant issues found\n\nNEXUS did not identify any meaningful problems in this change."
+    : `
+### 🚨 Issues Found: ${issueCount}
+
+${review.issues
+  .map(
+    (issue, index) => `
+#### ${index + 1}. ${severityEmoji[issue.severity]} ${issue.severity.toUpperCase()}
+
+**Issue:**  
+${issue.description}
+
+**💡 Suggested Fix:**  
+${issue.suggestion}
+`
+  )
+  .join("\n")}
+`;
+
+const comment = `
+# 🤖 NEXUS AI Review
+
+## 📋 Summary
+
+${review.summary}
+
+${issuesSection}
+
+---
+
+*Generated automatically by NEXUS*
+`;
