@@ -36,6 +36,11 @@ ${review.summary}
 
 ${issuesSection}
 
+
+console.log("========== RAW DIFF ==========");
+console.log(diff);
+console.log("========== END RAW DIFF ==========");
+
 ---
 
 *Generated automatically by NEXUS*
