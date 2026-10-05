@@ -400,16 +400,7 @@ ${issuesSection}
 
 worker.on("failed", (job, err) => {
   console.log(
-    `❌ Job ${job?.id} failed!`
+    ❌ Job ${job?.id} failed!
   );
 
-  console.log(
-    "Attempt:",
-    job?.attemptsMade
-  );
-
-  console.log(
-    "Error:",
-    err.message
-  );
-});
+ 
