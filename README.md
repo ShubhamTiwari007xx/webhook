@@ -413,3 +413,8 @@ worker.on("failed", (job, err) => {
     err.message
   );
 });
+
+
+function add(a: number, b: number) {
+  return a - b;
+}
