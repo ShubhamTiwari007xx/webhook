@@ -23,7 +23,7 @@ if (!verifyGitHubSignature(req)) {
         console.log("PR Number:", pull_request.number);
         console.log("PR Title:", pull_request.title);
     }
-if (!verifyGitHubSignature(req)) {
+if (verifyGitHubSignature(req)) {
         console.log("❌ Invalid GitHub signature");
         return res.status(401).send("Invalid signature");
     }
