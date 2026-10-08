@@ -24,7 +24,7 @@ if (existingReview?.githubCommentId) {
   );
 
   await prisma.review.update({
-    where: { id: reviewId },
+    where: { id: id },
     data: {
       githubCommentId: String(commentResponse.id),
     },
