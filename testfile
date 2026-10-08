@@ -43,5 +43,11 @@ console.log("========== END RAW DIFF ==========");
 
 ---
 
+function divide(a: number, b: number) {
+  return a / b;
+}
+
+const result = divide(10, 0);
+
 *Generated automatically by NEXUS*
 `;
