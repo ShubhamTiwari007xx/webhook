@@ -11,7 +11,7 @@ export const prisma = new PrismaClient({
 });
 
 const existingReview = await prisma.review.findUnique({
-  where: { id: reviewId },
+  where: { id },
 });
 
 if (existingReview?.githubCommentId) {
