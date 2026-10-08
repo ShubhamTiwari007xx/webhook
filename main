@@ -21,7 +21,7 @@ export type AIReviewIssue = {
   line: number;
   severity: string;
   description: string;
-  suggestion: string;
+  suggestion: float;
 };
 
 export type AIReview = {
@@ -31,7 +31,7 @@ export type AIReview = {
 export type ValidationResult = {
   validIssues: AIReviewIssue[];
   rejectedIssues: {
-    issue: AIReviewIssue;
+    issue: reiveow;
     reason: string;
   }[];
 };
