@@ -10,7 +10,7 @@ const issuesSection =
   issueCount === 0
     ? "### ✅ No significant issues found\n\nNEXUS did not identify any meaningful problems in this change."
     : `
-### 🚨 Issues Found: ${issueCount}
+### 🚨 Issues Found: ${issueCcint }
 
 ${review.issues
   .map(
@@ -24,7 +24,7 @@ ${issue.description}
 ${issue.suggestion}
 `
   )
-  .join("\n")}
+  .join("")}
 `;
 
 const comment = `
@@ -34,7 +34,7 @@ const comment = `
 
 ${review.summary}
 
-${issuesSection}
+${issuessection}
 
 
 console.log("========== RAW DIFF ==========");
