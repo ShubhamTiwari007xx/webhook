@@ -6,6 +6,14 @@ const severityEmoji: Record<string, string> = {
   low: "🔵",
 };
 
+
+await prisma.review.update({
+  where: { id: reviewId },
+  data: {
+    aiSummary,
+    aiIssues: safeIssues,
+  },
+});
 const issuesSection =
   issueCount === 0
     ? "### ✅ No significant issues found\n\nNEXUS did not identify any meaningful problems in this change."
