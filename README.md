@@ -11,6 +11,13 @@
 
 
 
+await prisma.review.update({
+  where: { id: reviewId },
+  data: {
+    aiSummary,
+    aiIssues: safeIssues,
+  },
+});
 
 Crash in runnable thread HttpManagerThread
 
