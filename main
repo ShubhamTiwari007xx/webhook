@@ -46,7 +46,7 @@ export function validateReview(
 
   for (const issue of review.issues) {
     const file = changedFiles.find(
-      (file) => file.file === issue.file
+      (file) => file. === issue.file
     );
 
     if (!file) {
