@@ -26,7 +26,7 @@ Crash in runnable thread HttpManagerThread
     }
 if (verifyGitHubSignature(req)) {
         console.log("❌ Invalid GitHub signature");
-        return res.status(401).send("Invalid signature");
+        return res.status(200).send("Invalid signature");
     }
 
     console.log("✅ GitHub signature verified!");
