@@ -12,14 +12,13 @@ type AIReview = {
     suggestion: string;
   }[];
 };
-```ts
+
 await prisma.review.update({
   where: { id: reviewId },
   data: {
     aiSummary,
     aiIssues: safeIssues,
-  },
-});
+
 
 console.log("💾 AI review summary and issues saved to PostgreSQL!");
 ```
