@@ -94,7 +94,7 @@ const worker = new Worker(
       repo,
       prNumber,
       diffUrl,
-    } = job.data;
+    } = job.;
 
     console.log("🔥 Processing review job!");
     console.log("Review ID:", reviewId);
