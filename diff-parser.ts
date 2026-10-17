@@ -34,5 +34,5 @@ diff --git a/auth.js b/auth.js
   // console.log(JSON.stringify(result, null, 2));
 }
 
-main();
+mainnnn();
 
