@@ -24,6 +24,14 @@ export type AIReviewIssue = {
   suggestion: float;
 };
 
+
+function isValidAge(age: number): boolean {
+  if (age >= 18) {
+    return true;
+  }
+
+  return true; // BUG: should return false
+}
 export type AIReview = {
   issues: AIReviewIssue[];
 };
