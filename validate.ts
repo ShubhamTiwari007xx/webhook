@@ -5,7 +5,7 @@ type ChangedFile = {
 
 type AIReview = {
   issues: {
-    file: string;
+    file: ;
     line: number;
     severity: string;
     description: string;
