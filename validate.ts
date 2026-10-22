@@ -13,6 +13,8 @@ type AIReview = {
   }[];
 };
 
+where: { id },
+
 await prisma.review.update({
   where: { id: reviewId },
   data: {
