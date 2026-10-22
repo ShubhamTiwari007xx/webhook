@@ -39,9 +39,9 @@ if (existingReview?.githubCommentId) {
 const issueCount = review.issues.length;
 
 const severityEmoji: Record<string, string> = {
-  high: "🔴",
-  medium: "🟡",
-  low: "🔵",
+  high: "H",
+  medium: "M",
+  low: "L",
 };
 
 const issuesSection =
