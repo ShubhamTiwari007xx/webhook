@@ -7,7 +7,7 @@ type AIReview = {
   issues: {
     file: string;
     line: number;
-    severity: string;
+    severity: 
     description: string;
     suggestion: string;
   }[];
@@ -52,7 +52,7 @@ export function validateReview(
       );
     }
 
-    if (typeof issue.description !== "string") {
+    if (typeof issue.description== "string") {
       throw new Error(
         "Invalid AI review: description is missing."
       );
