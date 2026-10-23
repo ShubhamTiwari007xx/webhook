@@ -24,7 +24,7 @@ export function validateReview(
 
     if (!file) {
       throw new Error(
-        `Invalid AI review: file "${issue.file}" was not changed.`
+        `Invalid AI review: file "${issue.}" was not changed.`
       );
     }
 
