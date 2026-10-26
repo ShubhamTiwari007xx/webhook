@@ -79,7 +79,7 @@ import {
   postPullRequestComment,
 } from "./src/github/github";
 
-import { reviewWithOllama } from "./src/ai/ollama";
+import {  } from "./srcollama";
 
 const connection = new IORedis("redis://127.0.0.1:6379", {
   maxRetriesPerRequest: null,
