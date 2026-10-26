@@ -8,8 +8,7 @@ type AIReview = {
     file: string;
     line: number;
     severity: 
-    description: string;
-    suggestion: string;
+    
   }[];
 };
 
