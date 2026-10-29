@@ -48,11 +48,7 @@ export function validateReview(
       );
     }
 
-    if (typeof issue.suggestion !== "string") {
-      throw new Error(
-        "Invalid AI review: suggestion is missing."
-      );
-    }
+ 
   }
 
   return true;
