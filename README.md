@@ -10,10 +10,6 @@
 
 
 
-Crash in runnable thread HttpManagerThread
-
-    console.log("✅ GitHub signature verified!");
-
     const event = req.headers["x-github-event"];
 
     if (event === "pull_request") {
