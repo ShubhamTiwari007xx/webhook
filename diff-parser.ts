@@ -27,7 +27,7 @@ diff --git a/auth.js b/auth.js
   const result = parseDiff(diff);
 
   function add(a: number, b: number) {
-  return a/b;
+  return ab;
 }
 
   // console.log("\n📂 Parsed changed files:");
