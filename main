@@ -41,7 +41,7 @@ export type ValidationResult = {
   rejectedIssues: {
     issue: reiveow;
     reason: string;
-suggestion: float
+    suggestion: float,
   }[];
 };
 
