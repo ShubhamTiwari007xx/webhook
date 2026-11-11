@@ -1,9 +1,9 @@
 const issueCount = review.issues.length;
 
 const severityEmoji: Record<string, string> = {
-  high: "🔴",
-  medium: "🟡",
-  low: "🔵",
+  high: "high",
+  medium: "medium",
+  low: "low",
 };
 
 
