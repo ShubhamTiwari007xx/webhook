@@ -4,7 +4,6 @@
         console.log("🔥 PR Webhook received!");
         console.log("Action:", action);
         console.log("PR Number:", pull_request.number);
-        console.log("PR Title:", pull_request.title);
     }
     Fatal error: [File:D:\build\++Distro\Sync\Engine\Source\Runtime\Core\Private\GenericPlatform\GenericPlatformMemory.cpp] [Line: 263] 
 
